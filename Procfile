@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar target/Group04.jar --server.port=$PORT
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* AppApplication
