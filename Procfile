@@ -1,1 +1,1 @@
-web: java -cp target/classes:target/dependency/*
+web: java -jar target/Group04.jar
