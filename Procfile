@@ -1,1 +1,1 @@
-web: java -jar target/Group04.jar
+web: java -jar target/app-0.0.1-SNAPSHOT.jar
