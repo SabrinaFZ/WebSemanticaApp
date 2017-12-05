@@ -69,7 +69,7 @@
 					<execution>
 						<phase>package</phase>
 						<goals>
-							<goal>copy</goal>
+							<goal>repackage</goal>
 						</goals>
 						<configuration>
 							<artifactItems>
