@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* AppApplication
+web: java -jar target/Group04.jar
