@@ -16,7 +16,7 @@ public class JenaAPI {
 	
 	
 	public static Model read(){
-		String filename = "aparcamientos-publicos-updated-2.ttl";
+		String filename = "aparcamientos-publicos-with-links.ttl";
 		Model model = ModelFactory.createDefaultModel();
 		FileInputStream in = null;
 		try {
@@ -30,7 +30,7 @@ public class JenaAPI {
 		return model;
 	}
 	
-	public static ArrayList<ArrayList<String>> getParkingByStreet(Model model, String uri){
+	public static ArrayList<ArrayList<String>> getParkingByDistrict(Model model, String uri){
 		ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
 	    final String query = 
         "prefix ont: <http://www.semanticweb.org/Group04/ontology#>\n" +
@@ -85,7 +85,7 @@ public class JenaAPI {
 		    if(qs.get("accesible").toString() == "0"){
 		    	accesible = "Accesible: No";
 		    } else {
-		    	accesible = "Accesible: No";
+		    	accesible = "Accesible: Si";
 		    }
 		    result = qs.get( "type" ).toString() +
 		    		".\n" + accesible;		            

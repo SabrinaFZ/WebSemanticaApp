@@ -103,12 +103,12 @@ html, body {
 	</div>
 	<div id="map"></div>
 	<script>
- 	var map;
+	var map;
 	function initialize() {
 			map = new google.maps.Map(document.getElementById('map'), {
- 				center: {lat: 40.416775, lng: -3.703790},
-          		zoom: 10
-        });
+				center: {lat: 40.416775, lng: -3.703790},
+				zoom: 10
+		});
 
 		}
 </script>
@@ -117,17 +117,17 @@ html, body {
 	$(function () {
 		var parking = [[${parking}]]
 		console.log(parking)
-		         
+				
 		if (parking instanceof Array) {
 			var i;
 			var infoWindow = new google.maps.InfoWindow();
 			for (i = 0; i < parking.length; i++) {			
 				var item = parking[i]
 				var contentString = '<div id="content">'+
-			      '<div id="siteNotice">'+
-			      '</div>'+
-			      '<h6 id="firstHeading" class="firstHeading">'+item[0]+'</h6>';
-			   
+				'<div id="siteNotice">'+
+				'</div>'+
+				'<h6 id="firstHeading" class="firstHeading">'+item[0]+'</h6>';
+			
 				var marker = new google.maps.Marker({
 					position: new google.maps.LatLng(item[1], item[2]),
 					title: item[0],
@@ -138,7 +138,7 @@ html, body {
 
 				google.maps.event.addListener(marker, 'click', function() {
 					infoWindow.setContent('<h6>'+this.title+'</h6>\n'+this.info);
-			        infoWindow.open(map,this);
+					infoWindow.open(map,this);
 				});
 				
 				marker.setMap(map);

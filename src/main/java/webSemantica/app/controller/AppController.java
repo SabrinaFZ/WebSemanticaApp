@@ -28,7 +28,7 @@ public class AppController {
 	@RequestMapping(value="/search", method = RequestMethod.POST)
 	public ModelAndView searchParking(@RequestParam String input, Model parking){
 		ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
-		result = JenaAPI.getParkingByStreet(JenaAPI.read(), input.toUpperCase());
+		result = JenaAPI.getParkingByDistrict(JenaAPI.read(), input.toUpperCase());
 		ModelAndView modelAndView = new ModelAndView();
 		parking.addAttribute("parking", result);
 		modelAndView.setViewName("/index");
