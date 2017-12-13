@@ -10,9 +10,19 @@ import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
 
 
 public class JenaAPI {
+	
+	public static String schema = "http://schema.org/";
+	public static String ont = "http://www.semanticweb.org/Group04/ontology#";
+	public static String rdf = "http://www.semanticweb.org/Group04/ontology#";
+	public static String owl = "http://www.w3.org/2002/07/owl#";
+	public static String rdfs = "http://www.w3.org/2000/01/rdf-schema#";
 	
 	
 	public static Model read(){
@@ -51,7 +61,7 @@ public class JenaAPI {
 		while ( rs.hasNext() ) {
 			ArrayList<String> parking = new ArrayList<String>();
 		    final QuerySolution qs = rs.next();
-		    String info = getInfoParking(model, qs.get( "parking" ).toString());
+		    String info = getInfoParking(model, qs.get( "name" ).toString());
 		    parking.add(qs.get( "name" ).toString());
 		    parking.add(qs.get( "lat" ).toString());
 		    parking.add(qs.get( "lon" ).toString());
@@ -62,33 +72,30 @@ public class JenaAPI {
 		return result;
 	}
 	
-	public static String getInfoParking(Model model, String uri){
+	public static String getInfoParking(Model model, String parkingName){
 		String result = "";
-	    final String query = 
-        "prefix ont: <http://www.semanticweb.org/Group04/ontology#>\n" +
-        "prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-        "prefix owl: <http://www.w3.org/2002/07/owl#>\n" +
-        "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-        "\n" +
-        "select ?parking ?name ?type ?accesible where {\n" +
-        "  <"+uri+"> ?parking ont:Parking;\n"+
-        "             ont:hasType ?type ;\n" +
-        "             ont:isAccesible ?accesible;\n" +
-        
-        "}"; 
-    
-	    final QueryExecution exec = QueryExecutionFactory.create( query, model );
-		final ResultSet rs = exec.execSelect();
-		while ( rs.hasNext() ) {
-		    final QuerySolution qs = rs.next();
-		    String accesible = "";
-		    if(qs.get("accesible").toString() == "0"){
-		    	accesible = "Accesible: No";
-		    } else {
-		    	accesible = "Accesible: Si";
-		    }
-		    result = qs.get( "type" ).toString() +
-		    		".\n" + accesible;		            
+		
+		Property isAccesible = model.createProperty(ont+"isAccesible");
+		Property hasName = model.createProperty(ont+"hasName");
+		Property hasType = model.createProperty(ont+"hasType");
+		
+		StmtIterator stIter = model.listStatements(null, hasName, parkingName);
+		
+		while (stIter.hasNext()) {
+			Statement st = stIter.next();
+			Resource subj = st.getSubject();
+			
+			Statement description = subj.getProperty(hasType);
+			Statement accesibility = subj.getProperty(isAccesible);
+			
+			String acc = "";
+			
+			if(accesibility.getObject().toString().equals("0")){
+				acc = "Accesible: No";
+			} else {
+				acc = "Accesible: Si";
+			}
+			result = description.getObject().toString() + ".\n" + acc;
 		}
 		return result;
 	}
