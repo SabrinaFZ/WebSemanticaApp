@@ -1,5 +1,6 @@
 # Web Semantica App
 Web Application to find public parkings in Madrid by district
+![alt text](https://github.com/SabrinaFZ/WebSemanticaApp/blob/master/App.png)
 
 
 ### Getting started
